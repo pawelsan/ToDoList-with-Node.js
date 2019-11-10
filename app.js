@@ -8,7 +8,8 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-let newTasks = [];
+let Tasks = [];
+let WorkTasks = [];
 
 app.get("/", function (req, res) {
     const date = new Date();
@@ -21,8 +22,8 @@ app.get("/", function (req, res) {
     const day = date.toLocaleDateString("en-US", options);
 
     res.render("index", {
-        today: day,
-        newItems: newTasks,
+        listTitle: day,
+        items: Tasks,
     })
 
 
@@ -34,8 +35,27 @@ app.get("/", function (req, res) {
 
 app.post("/", function (req, res) {
     const newTask = req.body.newTask;
-    newTasks.push(newTask);
-    res.redirect("/");
+    console.log(req.body);
+    if (req.body.button == "Work") {
+        WorkTasks.push(newTask);
+        res.redirect("/work");
+    } else {
+        Tasks.push(newTask);
+        res.redirect("/");
+    }
+})
+
+app.get("/work", function (req, res) {
+    res.render("index", {
+        listTitle: "Work List",
+        items: WorkTasks,
+    })
+})
+
+app.post("/work", function (req, res) {
+    const newTask = req.body.newTask;
+
+
 })
 
 app.listen(3000, function () {
