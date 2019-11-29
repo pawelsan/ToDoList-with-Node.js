@@ -32,6 +32,7 @@ const task3 = new Item({
     name: "Get a birthday present for Joasia"
 })
 
+// Starting tasks
 const tasks = [task1, task2, task3];
 
 // let Tasks = [];
@@ -74,20 +75,27 @@ app.get("/", function (req, res) {
 
 app.post("/", function (req, res) {
     const newTask = req.body.newTask;
-    console.log(req.body);
-    if (req.body.button == "Work") {
-        WorkTasks.push(newTask);
-        res.redirect("/work");
-    } else {
-        Tasks.push(newTask);
-        res.redirect("/");
-    }
+
+    // Creating tasks dynamically
+    const task = new Item({
+        name: newTask
+    });
+    // Mongoose shortcut
+    task.save();
+    res.redirect("/");
+    // if (req.body.button == "Work") {
+    //     WorkTasks.push(newTask);
+    //     res.redirect("/work");
+    // } else {
+    //     Tasks.push(newTask);
+    //     res.redirect("/");
+    // }
 })
 
 app.get("/work", function (req, res) {
     res.render("index", {
         listTitle: "Work List",
-        items: WorkTasks,
+        // items: WorkTasks,
     })
 })
 
