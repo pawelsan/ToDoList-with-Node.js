@@ -92,6 +92,19 @@ app.post("/", function (req, res) {
     // }
 })
 
+app.post("/delete", function (req, res) {
+    const deletedItemId = req.body.deleted;
+    Item.findByIdAndRemove(deletedItemId, function (err) {
+        if (err) {
+            console.log(err)
+        }
+        else {
+            console.log("Succesfully deleted item from the DB");
+            res.redirect("/")
+        }
+    })
+})
+
 app.get("/work", function (req, res) {
     res.render("index", {
         listTitle: "Work List",

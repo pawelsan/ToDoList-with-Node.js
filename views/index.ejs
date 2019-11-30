@@ -7,10 +7,12 @@
     <ul>
         <% items.forEach(item => { %>
         <li class="item">
-            <input type="checkbox">
-            <p>
-                <%= item.name %>
-            </p>
+            <form action="/delete" method="POST">
+                <input type="checkbox" onchange="this.form.submit()" name="deleted" value="<%=item._id%>">
+                <p>
+                    <%= item.name %>
+                </p>
+            </form>
         </li>
         <% }) %>
         <!-- Same as above but wit a "for loop" -->
