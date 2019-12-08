@@ -9,13 +9,20 @@
         <li class="item">
             <form action="/delete" method="POST">
                 <input type="checkbox" onchange="this.form.submit()" name="deleted" value="<%=item._id%>">
+                <!-- If statement to create links only when we are in the home page -->
+                <% if(homePage) { %>
+                <a href="/<%=item.name %>">
+                    <%= item.name %></a>
+                <% } else { %>
                 <p>
                     <%= item.name %>
                 </p>
+                <% } %>
+                <input type="hidden" name="listName" value="<%=listTitle%>">
             </form>
         </li>
         <% }) %>
-        <!-- Same as above but wit a "for loop" -->
+        <!-- Same as above but done with a "for loop" -->
         <!-- <% for (i=0; i < items.length; i++) { %> -->
         <!-- <li class="item">
             <input type="checkbox">
@@ -27,8 +34,8 @@
     </ul>
 
     <form class="item" action="/" method="POST">
-        <input type="text" name="newTask" placeholder="Add new task" autocomplete="off">
-        <button type="submit" name="button" value=<%=listTitle %>>+</button>
+        <input type="text" name="newItem" placeholder="Add a new item" autocomplete="off">
+        <button type="submit" name="button" value="<%=listTitle %>">+</button>
     </form>
 </div>
 
