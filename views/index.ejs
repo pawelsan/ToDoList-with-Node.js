@@ -1,18 +1,31 @@
 <%- include("header") -%>
-<div class="box" id="heading">
+
+<div class="heading">
     <h2>
-        <%= listTitle %>!</h2>
+        <% if(homePage) { %>
+        Lists as of
+        <%= listTitle %>
+        <% } else { %>
+        Tasks in the "
+        <%= listTitle %> " list
+        <% } %>
+    </h2>
 </div>
+<% if(!homePage) { %>
+<button><a href="/"><i class="fas fa-home"></i></a></button>
+<% } %>
 <div class="box">
     <ul>
         <% items.forEach(item => { %>
-        <li class="item">
+        <li>
             <form action="/delete" method="POST">
-                <input type="checkbox" onchange="this.form.submit()" name="deleted" value="<%=item._id%>">
+                <button type="submit" name="deleted" value="<%=item._id%>"><i class="far fa-trash-alt"></i></button>
                 <!-- If statement to create links only when we are in the home page -->
                 <% if(homePage) { %>
-                <a href="/<%=item.name %>">
-                    <%= item.name %></a>
+                <p>
+                    <a href="/<%=item.name %>">
+                        <%= item.name %> list</a>
+                </p>
                 <% } else { %>
                 <p>
                     <%= item.name %>
@@ -33,10 +46,13 @@
         <!-- <% } %> -->
     </ul>
 
-    <form class="item" action="/" method="POST">
+    <form action="/" method="POST">
         <input type="text" name="newItem" placeholder="Add a new item" autocomplete="off">
-        <button type="submit" name="button" value="<%=listTitle %>">+</button>
+        <button type="submit" name="button" value="<%=listTitle %>"><i class="fas fa-plus"></i></button>
     </form>
 </div>
+<span>
+    <a href="/about">About</a>
+</span> this website.
 
 <%- include("footer") -%>
